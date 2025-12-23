@@ -1,0 +1,13 @@
+.DS_Store
+.swiftpm/
+.build/
+xcuserdata/
+*.xcworkspace/
+build/
+dist/
+*.app
+*.dSYM
+.env
+.env.local
+*.xcarchive
+DerivedData/

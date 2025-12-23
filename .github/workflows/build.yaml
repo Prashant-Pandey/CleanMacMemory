@@ -1,0 +1,41 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-13
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Select Xcode
+      run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+    
+    - name: Check Xcode version
+      run: xcodebuild -version
+    
+    - name: Build
+      run: |
+        xcodebuild clean build \
+          -scheme CleanMacMemory \
+          -configuration Release \
+          -arch arm64
+    
+    - name: Run Tests
+      run: |
+        xcodebuild test \
+          -scheme CleanMacMemory \
+          -destination 'generic/platform=macOS' \
+          -arch arm64
+    
+    - name: Build Archive
+      run: |
+        xcodebuild archive \
+          -scheme CleanMacMemory \
+          -archivePath build/CleanMacMemory.xcarchive \
+          -arch arm64
